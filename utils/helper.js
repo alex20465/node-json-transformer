@@ -198,10 +198,13 @@ const convertSpecialType = (key, start, obj, config) => {
 
 };
 
-
-const convertByKey = (key, obj, rootData, configuration) => {
+const convertByKey = (key, obj, rootData, configuration, index) => {
 
     const specialType = isSpecialType(key);
+
+    if (key.indexOf('{i}') && index !== undefined) {
+        key = key.replace('{i}', index);
+    }
 
     if (key.startsWith(IDENTIFIERS.HARD_CODED)) {
         return key.substring(1);

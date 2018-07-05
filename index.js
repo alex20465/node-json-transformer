@@ -2,16 +2,16 @@
  * Created by sudhir.m on 30/11/16.
  */
 'use strict';
-const {convertByKey} = require('./utils/helper');
-const {getObjectOrArrayFromStringKey, isNonEmptyArray} = require('./utils/utilities');
-const {IDENTIFIERS} = require('./utils/constants');
+const { convertByKey } = require('./utils/helper');
+const { getObjectOrArrayFromStringKey, isNonEmptyArray } = require('./utils/utilities');
+const { IDENTIFIERS } = require('./utils/constants');
 
 let rootData = {};
 let configuration = {};
 
 const transform = (data, transformation) => {
 
-    let {mapping, config} = transformation;
+    let { mapping, config } = transformation;
 
     // make copy
     rootData = data;
@@ -109,19 +109,17 @@ const specialObjectTransformation = (mappingKey, data) => {
 
 };
 
-const transformObject = (obj, data) => {
+const transformObject = (obj, data, index) => {
 
     let transformedObj = {};
     let keys = Object.keys(obj);
-
     keys.forEach((key) => {
 
         const mappingKey = obj[key];
 
         if (typeof mappingKey === "string") {
-
             // check for hard coded values, etc..
-            transformedObj[key] = convertByKey(mappingKey, data, rootData, configuration);
+            transformedObj[key] = convertByKey(mappingKey, data, rootData, configuration, index);
 
         } else if (Array.isArray(mappingKey) && mappingKey.length > 0) {
 
@@ -161,7 +159,7 @@ const transformArray = (mapping, data) => {
 
     let itemTransformation = mapping.item;
     return sourceArray.map((val, key) => {
-        return transformObject(itemTransformation, val);
+        return transformObject(itemTransformation, val, key);
     });
 
 };

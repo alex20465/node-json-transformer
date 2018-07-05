@@ -5,67 +5,37 @@ const transformHelper = require("../index");
 
 
 let data = {
-    uom: {
-        k: 'M'
-    },
-    v: {
-        val: "item"
-    },
-    d: "dd",
-    f: "ff",
-    g: "gg",
-    j: [{
-        k: {
-            l: "jj"
+
+    items: [
+        {
+            details: {
+                name: "alex",
+                lastname: "fotis"
+            }
+        },
+        {
+            details: {
+                name: "chris"
+            }
         }
-    }, {
-        k: {
-            l: "ll"
+    ],
+    requests: [
+        {
+            boss: "test"
+        },
+        {
+            boss: "test2"
         }
-    }],
-    f : [{
-        b :"bb"
-    }]
+    ]
 };
 
 
 let transformation = {
 
-    config: {
-        appendMap: {
-            i: {
-                path: 'uom.k',
-                separator: '/'
-            }
-        }
-    },
     mapping: {
+        list: "requests",
         item: {
-            a: "v.val{APPEND{i}}",
-            b: [{
-                collect: "",
-                item: [
-                    "d", "f", "g", "j.k.l"
-                ]
-            }],
-            c: [{
-                collect: "",
-                item: [
-                    [{
-                        list: "j",
-                        item: {
-                            x: "k.l"
-                        }
-                    }],
-                    [{
-                        list: "f",
-                        item: {
-                            x: "b"
-                        }
-                    }]
-                ]
-            }]
-
+            name: "^items.{i}.details.name"
         }
     }
 
